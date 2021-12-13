@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         var table: TableLayout = findViewById<TableLayout>(R.id.tableLayout) as TableLayout
 
         var launchManager = LaunchManager(this, txt, table)
-        launchManager.requestLaunchesData("2019")
+        launchManager.requestLaunchesData("2019") // If scrolled down, year will be decreased
 
         // requestLaunchesData("2019") // when scrolls down, year must be changed
     }

@@ -16,9 +16,6 @@ class LaunchManager constructor(context: Context, txt: TextView, table: TableLay
     private var table: TableLayout = table
 
     fun requestLaunchesData(launchYear: String) {
-        // var txt: TextView = findViewById<TextView>(R.id.textStorage) as TextView
-        // var table: TableLayout = findViewById<TableLayout>(R.id.tableLayout) as TableLayout
-
         var queue: RequestQueue = Volley.newRequestQueue(context)
         var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$launchYear" // 2015-2019
 
@@ -31,11 +28,9 @@ class LaunchManager constructor(context: Context, txt: TextView, table: TableLay
         var jsonRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
             { response ->
-                var launch: JSONObject // = response[0] as JSONObject
-                // Toast.makeText(this, lnc.getString("flight_number"), Toast.LENGTH_LONG).show()
-                // txt.setText(launch.getJSONObject("links").getString("mission_patch_small"))
+                var lastElem: Int = response.length() - 1 // TODO: find more elegant way to encount an array
 
-                var lastElem: Int = response.length() - 1
+                var launch: JSONObject
                 for (launch_counter in 0..lastElem) {
                     launch = response[launch_counter] as JSONObject
 
@@ -43,7 +38,6 @@ class LaunchManager constructor(context: Context, txt: TextView, table: TableLay
                     var launchDateUtc: String = launch.getString("launch_date_utc")
                     var details: String = launch.getString("details")
                     var missionPatchSmall: String = launch.getJSONObject("links").getString("mission_patch_small")
-                    Toast.makeText(context, missionPatchSmall, Toast.LENGTH_LONG).show()
 
                     // TODO: set these values in table
                 }
