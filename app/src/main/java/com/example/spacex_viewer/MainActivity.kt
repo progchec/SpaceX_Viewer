@@ -4,21 +4,34 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TableLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
+    var launches: ArrayList<Launch> = ArrayList<Launch>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        var txt: TextView = findViewById<TextView>(R.id.textStorage) as TextView
+        var rcV: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
+
+        for (i in 1..50) {
+            launches.add(Launch("a", "b", "c", "d"))
+        }
+
+        var launchAdapter: LaunchAdapter = LaunchAdapter(this, launches)
+        rcV.adapter = launchAdapter
     }
 
     fun btnClick(view: android.view.View) {
-        var txt: TextView = findViewById<TextView>(R.id.textStorage) as TextView
-        var table: TableLayout = findViewById<TableLayout>(R.id.tableLayout) as TableLayout
 
-        var launchManager = LaunchManager(this, txt, table)
-        launchManager.requestLaunchesData("2019") // If scrolled down, year will be decreased
 
-        // requestLaunchesData("2019") // when scrolls down, year must be changed
+        // var launchManager = LaunchManager(this, txt, rcV)
+        // launchManager.requestLaunchesData("2019") // If scrolled down, year will be decreased
+        // 2015-2019
+
+        // var lnc: Launch = Launch("a", "b", "c", "d")
     }
 }
 
