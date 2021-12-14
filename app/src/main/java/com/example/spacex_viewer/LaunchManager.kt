@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.TableLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -17,7 +18,13 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
     private var txt: TextView = txt
     private var rcV: RecyclerView = rcV
 
-    // var adapter: LaunchAdapter = LaunchAdapter(context, )
+    private var launches: ArrayList<Launch> = ArrayList<Launch>()
+    private var launchAdapter: LaunchAdapter = LaunchAdapter(context, launches)
+
+    init {
+        rcV.layoutManager = LinearLayoutManager(context)
+        rcV.adapter = launchAdapter
+    }
 
     fun requestLaunchesData(launchYear: String) {
         var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$launchYear"
@@ -57,6 +64,9 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         var launchDateUTC: String = launch.getString("launch_date_utc")
         var details: String = launch.getString("details")
         var missionPatchSmall: String = launch.getJSONObject("links").getString("mission_patch_small")
+
+        launches.add(Launch(missionName, launchDateUTC, details, missionPatchSmall))
+        launchAdapter.notifyItemInserted(launch_counter)
 
         // TODO: set these values in table
 
