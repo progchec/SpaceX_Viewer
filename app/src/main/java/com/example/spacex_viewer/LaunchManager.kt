@@ -68,8 +68,6 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         launches.add(Launch(missionName, launchDateUTC, details, missionPatchSmall))
         launchAdapter.notifyItemInserted(launch_counter)
 
-        // TODO: set these values in table
-
         txt.setText(missionPatchSmall)
     }
 }
