@@ -26,10 +26,12 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         rcV.adapter = launchAdapter
     }
 
-    fun requestLaunchesData(launchYear: String) {
-        var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$launchYear"
+    fun requestLaunchesData(sort: Boolean) {
+        for (year in 2015..2019) { // TODO: if "sort" pressed, encount array from 2019 to 2015
+            var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$year"
 
-        getJSONData(url, queue)
+            getJSONData(url, queue)
+        }
     }
 
     private fun getJSONData(url: String, queue: RequestQueue) {
@@ -48,7 +50,7 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
     private fun processJSONResponse(response: JSONArray) {
         var lastElem: Int = response.length() - 1 // TODO: find more elegant way to encount an array
 
-        for (launch_counter in 0..lastElem) {
+        for (launch_counter in 0..lastElem) { // TODO: if "sort" pressed, encount array from lastElem to 0
             sortLaunchElements(response, launch_counter)
         }
     }

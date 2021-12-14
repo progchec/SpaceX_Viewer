@@ -9,18 +9,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-    }
 
-    fun btnClick(view: android.view.View) {
         var txt: TextView = findViewById<TextView>(R.id.textStorage) as TextView
         var rcV: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
 
         var launchManager = LaunchManager(this, txt, rcV)
+        launchManager.requestLaunchesData(true) // TODO: make list sorting
+    }
 
-        launchManager.requestLaunchesData("2019")
-        launchManager.requestLaunchesData("2018")
-        launchManager.requestLaunchesData("2017")
-        launchManager.requestLaunchesData("2016")
-        launchManager.requestLaunchesData("2015")
+    fun btnClick(view: android.view.View) {
+
     }
 }
