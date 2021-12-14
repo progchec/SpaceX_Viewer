@@ -30,7 +30,6 @@ public class LaunchAdapter constructor(context: Context, launches: List<Launch>,
         holder.launchDateUTCView.setText(launch.getLaunchDateUTC())
         holder.detailsView.setText(launch.getDetails())
 
-        // TODO: do a request here
         getImageBitmap(holder, launch)
     }
 
@@ -52,8 +51,6 @@ public class LaunchAdapter constructor(context: Context, launches: List<Launch>,
     override fun getItemCount(): Int {
         return launches.size
     }
-
-
 
     class ViewHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val missionNameView: TextView = itemView.findViewById(R.id.missionNameTxt)

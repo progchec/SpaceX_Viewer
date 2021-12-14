@@ -38,6 +38,4 @@ class Launch constructor(missionName: String, launchDateUTC: String,
     fun setMissionPatchSmall(missionName: String) {
         this.missionPatchSmall = missionPatchSmall
     }
-
-    // TODO: write setters and getDetails() getter
 }

@@ -29,7 +29,6 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
     fun requestLaunchesData(launchYear: String) {
         var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$launchYear"
 
-
         getJSONData(url, queue)
     }
 
