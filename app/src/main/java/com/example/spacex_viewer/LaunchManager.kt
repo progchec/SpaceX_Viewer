@@ -1,9 +1,7 @@
 package com.example.spacex_viewer
 
 import android.content.Context
-import android.widget.TableLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -18,8 +16,10 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
     private var txt: TextView = txt
     private var rcV: RecyclerView = rcV
 
+    private var queue: RequestQueue = Volley.newRequestQueue(context)
+
     private var launches: ArrayList<Launch> = ArrayList<Launch>()
-    private var launchAdapter: LaunchAdapter = LaunchAdapter(context, launches)
+    private var launchAdapter: LaunchAdapter = LaunchAdapter(context, launches, queue)
 
     init {
         rcV.layoutManager = LinearLayoutManager(context)
@@ -28,7 +28,7 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
 
     fun requestLaunchesData(launchYear: String) {
         var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$launchYear"
-        var queue: RequestQueue = Volley.newRequestQueue(context)
+
 
         getJSONData(url, queue)
     }
@@ -40,15 +40,14 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
                     processJSONResponse(response)
             },
             { error ->
-                Toast.makeText(context, "Missing internet connection!", Toast.LENGTH_LONG).show()
+                var errorHandler: ErrorHandler = ErrorHandler(context, error.toString())
+                errorHandler.showError()
             })
         queue.add(jsonRequest)
     }
 
     private fun processJSONResponse(response: JSONArray) {
         var lastElem: Int = response.length() - 1 // TODO: find more elegant way to encount an array
-
-        Toast.makeText(context, response.getJSONObject(0).getString("mission_name"), Toast.LENGTH_LONG).show()
 
         for (launch_counter in 0..lastElem) {
             sortLaunchElements(response, launch_counter)
