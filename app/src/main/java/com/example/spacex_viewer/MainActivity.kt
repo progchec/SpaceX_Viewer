@@ -18,7 +18,11 @@ class MainActivity : AppCompatActivity() {
         var rcV: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
 
         var launchManager = LaunchManager(this, txt, rcV)
-        launchManager.requestLaunchesData("2019") // If scrolled down, year will be decreased
-        // 2015-2019
+
+        launchManager.requestLaunchesData("2019")
+        launchManager.requestLaunchesData("2018")
+        launchManager.requestLaunchesData("2017")
+        launchManager.requestLaunchesData("2016")
+        launchManager.requestLaunchesData("2015")
     }
 }
