@@ -29,8 +29,4 @@ class MainActivity : AppCompatActivity() {
             launchManager.notifyAdapter()
         })
     }
-
-    fun btnClick(view: android.view.View) {
-
-    }
 }

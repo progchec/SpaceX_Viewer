@@ -30,9 +30,8 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
 
     fun requestLaunchesData() {
         launches.clear()
-        // launchAdapter.notifyItemRangeRemoved()
 
-        for (year in 2015..2019) { // TODO: if "sort" pressed, encount array from 2019 to 2015
+        for (year in 2015..2019) {
             var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$year"
             getJSONData(url, queue)
         }
