@@ -1,6 +1,7 @@
 package com.example.spacex_viewer
 
 import android.content.Context
+import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +12,11 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
 
-class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerView) {
+class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerView, swtc: Switch) {
     private var context: Context = context
     private var txt: TextView = txt
     private var rcV: RecyclerView = rcV
+    private var swtc: Switch = swtc
 
     private var queue: RequestQueue = Volley.newRequestQueue(context)
 
@@ -26,26 +28,21 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         rcV.adapter = launchAdapter
     }
 
-    fun requestLaunchesData(isSorted: Boolean) {
+    fun requestLaunchesData() {
         launches.clear()
-        launchAdapter.notifyDataSetChanged()
+        // launchAdapter.notifyItemRangeRemoved()
 
-        var sequence = if (isSorted)
-            2015..2019
-        else
-            2019 downTo 2015
-
-        for (year in sequence) { // TODO: if "sort" pressed, encount array from 2019 to 2015
+        for (year in 2015..2019) { // TODO: if "sort" pressed, encount array from 2019 to 2015
             var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$year"
-            getJSONData(url, queue, isSorted)
+            getJSONData(url, queue)
         }
     }
 
-    private fun getJSONData(url: String, queue: RequestQueue, isSorted: Boolean) {
+    private fun getJSONData(url: String, queue: RequestQueue) {
         var jsonRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
             { response ->
-                    processJSONResponse(response, isSorted)
+                    processJSONResponse(response)
             },
             { error ->
                 var errorHandler: ErrorHandler = ErrorHandler(context, error.toString())
@@ -54,17 +51,14 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         queue.add(jsonRequest)
     }
 
-    private fun processJSONResponse(response: JSONArray, isSorted: Boolean) {
+    private fun processJSONResponse(response: JSONArray) {
         var lastElem: Int = response.length() - 1 // TODO: find more elegant way to encount an array
 
-        var sequence = if (isSorted)
-            0..lastElem
-        else
-            lastElem downTo 0
-
-        for (launch_counter in sequence) { // TODO: if "sort" pressed, encount array from lastElem to 0
+        for (launch_counter in 0..lastElem) { // TODO: if "sort" pressed, encount array from lastElem to 0
             sortLaunchElements(response, launch_counter)
         }
+
+        sortLaunches(swtc.isChecked)
     }
 
     private fun sortLaunchElements(response: JSONArray, launch_counter: Int) {
@@ -81,5 +75,22 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         launchAdapter.notifyItemInserted(launch_counter)
 
         txt.setText(missionPatchSmall)
+    }
+
+    fun sortLaunches(isSortedByIncrease: Boolean) {
+        if (isSortedByIncrease) {
+            launches.sortBy {
+                    launch -> launch.getLaunchDateUTC()
+            }
+        }
+        else {
+            launches.sortByDescending {
+                    launch -> launch.getLaunchDateUTC()
+            }
+        }
+    }
+
+    fun notifyAdapter() {
+        launchAdapter.notifyDataSetChanged()
     }
 }

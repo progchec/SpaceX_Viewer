@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
-import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -21,17 +20,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun fillList(swtc: Switch, txt: TextView, rcV: RecyclerView) {
-        var isSorted: Boolean = swtc.isChecked
-
-        var launchManager = LaunchManager(this, txt, rcV)
-        launchManager.requestLaunchesData(isSorted)
+        var launchManager = LaunchManager(this, txt, rcV, swtc)
+        launchManager.requestLaunchesData() // TODO: sort data directly in collection
 
         swtc.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener
         { compoundButton, isChecked ->
-            isSorted = isChecked
-
-            // var launchManager = LaunchManager(this, txt, rcV)
-            launchManager.requestLaunchesData(isSorted)
+            launchManager.sortLaunches(isChecked)
+            launchManager.notifyAdapter()
         })
     }
 
