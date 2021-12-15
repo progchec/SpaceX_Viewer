@@ -12,15 +12,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var txt: TextView = findViewById<TextView>(R.id.textStorage) as TextView
         var rcV: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
         var swtc: Switch = findViewById<Switch>(R.id.sortedSwitch) as Switch
 
-        fillList(swtc, txt, rcV)
+        fillList(swtc, rcV)
     }
 
-    fun fillList(swtc: Switch, txt: TextView, rcV: RecyclerView) {
-        var launchManager = LaunchManager(this, txt, rcV, swtc)
+    fun fillList(swtc: Switch, rcV: RecyclerView) {
+        var launchManager = LaunchManager(this, rcV, swtc)
         launchManager.requestLaunchesData() // TODO: sort data directly in collection
 
         swtc.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener

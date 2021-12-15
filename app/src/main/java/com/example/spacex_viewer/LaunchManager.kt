@@ -12,9 +12,8 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
 
-class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerView, swtc: Switch) {
+class LaunchManager constructor(context: Context, rcV: RecyclerView, swtc: Switch) {
     private var context: Context = context
-    private var txt: TextView = txt
     private var rcV: RecyclerView = rcV
     private var swtc: Switch = swtc
 
@@ -72,8 +71,6 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
 
         launches.add(Launch(missionName, launchDateUTC, details, missionPatchSmall))
         launchAdapter.notifyItemInserted(launch_counter)
-
-        txt.setText(missionPatchSmall)
     }
 
     fun sortLaunches(isSortedByIncrease: Boolean) {
