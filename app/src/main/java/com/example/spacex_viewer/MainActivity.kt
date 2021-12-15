@@ -2,6 +2,8 @@ package com.example.spacex_viewer
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
@@ -12,17 +14,21 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var rcV: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
-        var swtc: Switch = findViewById<Switch>(R.id.sortedSwitch) as Switch
+        var launchesRecyclerView: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
+        var sortSwitch: Switch = findViewById<Switch>(R.id.sortedSwitch) as Switch
+        var refreshButton: Button = findViewById<Button>(R.id.refreshButton) as Button
+        fillList(sortSwitch, launchesRecyclerView)
 
-        fillList(swtc, rcV)
+        refreshButton.setOnClickListener(View.OnClickListener {
+            fillList(sortSwitch, launchesRecyclerView)
+        })
     }
 
-    fun fillList(swtc: Switch, rcV: RecyclerView) {
-        var launchManager = LaunchManager(this, rcV, swtc)
-        launchManager.requestLaunchesData() // TODO: sort data directly in collection
+    private fun fillList(sortSwitch: Switch, launchesRecyclerView: RecyclerView) {
+        var launchManager: LaunchManager = LaunchManager(this, launchesRecyclerView, sortSwitch)
+        launchManager.requestLaunchesData()
 
-        swtc.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener
+        sortSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener
         { compoundButton, isChecked ->
             launchManager.sortLaunches(isChecked)
             launchManager.notifyAdapter()

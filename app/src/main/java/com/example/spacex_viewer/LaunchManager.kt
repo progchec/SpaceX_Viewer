@@ -1,5 +1,6 @@
 package com.example.spacex_viewer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Switch
 import android.widget.TextView
@@ -52,7 +53,7 @@ class LaunchManager constructor(context: Context, rcV: RecyclerView, swtc: Switc
     private fun processJSONResponse(response: JSONArray) {
         var lastElem: Int = response.length() - 1 // TODO: find more elegant way to encount an array
 
-        for (launch_counter in 0..lastElem) { // TODO: if "sort" pressed, encount array from lastElem to 0
+        for (launch_counter in 0..lastElem) {
             sortLaunchElements(response, launch_counter)
         }
 
@@ -86,6 +87,7 @@ class LaunchManager constructor(context: Context, rcV: RecyclerView, swtc: Switc
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun notifyAdapter() {
         launchAdapter.notifyDataSetChanged()
     }
