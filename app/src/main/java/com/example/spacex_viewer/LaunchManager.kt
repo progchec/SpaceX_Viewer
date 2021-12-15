@@ -3,7 +3,6 @@ package com.example.spacex_viewer
 import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.Switch
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -21,7 +20,7 @@ class LaunchManager constructor(context: Context, rcV: RecyclerView, swtc: Switc
     private var queue: RequestQueue = Volley.newRequestQueue(context)
 
     private var launches: ArrayList<Launch> = ArrayList<Launch>()
-    private var launchAdapter: LaunchAdapter = LaunchAdapter(context, launches, queue)
+    private var launchAdapter: LaunchAdapter = LaunchAdapter(context, launches, queue) // TODO: test it!
 
     init {
         rcV.layoutManager = LinearLayoutManager(context)
@@ -44,7 +43,7 @@ class LaunchManager constructor(context: Context, rcV: RecyclerView, swtc: Switc
                     processJSONResponse(response)
             },
             { error ->
-                var errorHandler: ErrorHandler = ErrorHandler(context, error.toString())
+                var errorHandler: ErrorHandler = ErrorHandler(context, error.toString()) // TODO: test it!
                 errorHandler.showError()
             })
         queue.add(jsonRequest)

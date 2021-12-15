@@ -1,11 +1,10 @@
 package com.example.spacex_viewer
 
+import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
-
 import org.junit.Test
 import org.junit.runner.RunWith
-
 import org.junit.Assert.*
 
 /**
@@ -20,5 +19,12 @@ class ExampleInstrumentedTest {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
         assertEquals("com.example.spacex_viewer", appContext.packageName)
+    }
+
+    @Test
+    fun errHandlerNotFailsAfterObjectCreating() {
+        var ctx: Context = InstrumentationRegistry.getInstrumentation().context
+        var errHandler: ErrorHandler = ErrorHandler(ctx,
+        "test_error_msg")
     }
 }

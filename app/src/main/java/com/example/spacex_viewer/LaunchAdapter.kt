@@ -33,7 +33,7 @@ public class LaunchAdapter constructor(context: Context, launches: List<Launch>,
         getImageBitmap(holder, launch)
     }
 
-    fun getImageBitmap(holder: ViewHolder, launch: Launch) {
+    private fun getImageBitmap(holder: ViewHolder, launch: Launch) {
         var imageRequest: ImageRequest = ImageRequest(launch.getMissionPatchSmall(),
             { bitmap ->
                 holder.missionPatchImage.setImageBitmap(bitmap)

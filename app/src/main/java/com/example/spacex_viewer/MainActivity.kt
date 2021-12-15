@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.Button
 import android.widget.CompoundButton
 import android.widget.Switch
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         var launchesRecyclerView: RecyclerView = findViewById<RecyclerView>(R.id.recyclerView) as RecyclerView
         var sortSwitch: Switch = findViewById<Switch>(R.id.sortedSwitch) as Switch
         var refreshButton: Button = findViewById<Button>(R.id.refreshButton) as Button
+
         fillList(sortSwitch, launchesRecyclerView)
 
         refreshButton.setOnClickListener(View.OnClickListener {
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fillList(sortSwitch: Switch, launchesRecyclerView: RecyclerView) {
-        var launchManager: LaunchManager = LaunchManager(this, launchesRecyclerView, sortSwitch)
+        var launchManager = LaunchManager(this, launchesRecyclerView, sortSwitch)
         launchManager.requestLaunchesData()
 
         sortSwitch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener

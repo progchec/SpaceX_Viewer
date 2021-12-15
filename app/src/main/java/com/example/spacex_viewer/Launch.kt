@@ -22,20 +22,4 @@ class Launch constructor(missionName: String, launchDateUTC: String,
     fun getMissionPatchSmall(): String {
         return missionPatchSmall
     }
-
-    fun setMissionName(missionName: String) {
-        this.missionName = missionName
-    }
-
-    fun setLaunchDateUTC(launchDateUTC: String) {
-        this.launchDateUTC = launchDateUTC
-    }
-
-    fun setDetails(details: String) {
-        this.details = details
-    }
-
-    fun setMissionPatchSmall(missionName: String) {
-        this.missionPatchSmall = missionPatchSmall
-    }
 }
