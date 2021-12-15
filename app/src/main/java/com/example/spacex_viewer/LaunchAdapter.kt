@@ -56,7 +56,6 @@ public class LaunchAdapter constructor(context: Context, launches: List<Launch>,
         val missionNameView: TextView = itemView.findViewById(R.id.missionNameTxt)
         val launchDateUTCView: TextView = itemView.findViewById(R.id.launchDateTxt)
         val detailsView: TextView = itemView.findViewById(R.id.detailsTxt)
-
         val missionPatchImage: ImageView = itemView.findViewById(R.id.missionPatchImage)
     }
 }

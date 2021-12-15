@@ -26,19 +26,26 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         rcV.adapter = launchAdapter
     }
 
-    fun requestLaunchesData(sort: Boolean) {
-        for (year in 2015..2019) { // TODO: if "sort" pressed, encount array from 2019 to 2015
-            var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$year"
+    fun requestLaunchesData(isSorted: Boolean) {
+        launches.clear()
+        launchAdapter.notifyDataSetChanged()
 
-            getJSONData(url, queue)
+        var sequence = if (isSorted)
+            2015..2019
+        else
+            2019 downTo 2015
+
+        for (year in sequence) { // TODO: if "sort" pressed, encount array from 2019 to 2015
+            var url: String = "https://api.spacexdata.com/v3/launches?launch_year=$year"
+            getJSONData(url, queue, isSorted)
         }
     }
 
-    private fun getJSONData(url: String, queue: RequestQueue) {
+    private fun getJSONData(url: String, queue: RequestQueue, isSorted: Boolean) {
         var jsonRequest = JsonArrayRequest(
             Request.Method.GET, url, null,
             { response ->
-                    processJSONResponse(response)
+                    processJSONResponse(response, isSorted)
             },
             { error ->
                 var errorHandler: ErrorHandler = ErrorHandler(context, error.toString())
@@ -47,10 +54,15 @@ class LaunchManager constructor(context: Context, txt: TextView, rcV: RecyclerVi
         queue.add(jsonRequest)
     }
 
-    private fun processJSONResponse(response: JSONArray) {
+    private fun processJSONResponse(response: JSONArray, isSorted: Boolean) {
         var lastElem: Int = response.length() - 1 // TODO: find more elegant way to encount an array
 
-        for (launch_counter in 0..lastElem) { // TODO: if "sort" pressed, encount array from lastElem to 0
+        var sequence = if (isSorted)
+            0..lastElem
+        else
+            lastElem downTo 0
+
+        for (launch_counter in sequence) { // TODO: if "sort" pressed, encount array from lastElem to 0
             sortLaunchElements(response, launch_counter)
         }
     }
